@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<section class="flex flex-col items-center justify-center min-h-[70vh] space-y-8 animate-in fade-in duration-700">
+    <div class="text-center space-y-2">
+        <div
+            class="bg-emerald-600 w-16 h-16 rounded-[1.5rem] flex items-center justify-center text-white mx-auto shadow-xl shadow-emerald-100 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5">
+                <path d="M12 2v20M2 12h20" />
+            </svg>
+        </div>
+        <h2 class="text-4xl font-black text-emerald-900 tracking-tight">Bienvenue</h2>
+        <p class="text-gray-500 font-bold text-lg">Accédez à votre carnet</p>
+    </div>
+
+    <form th:action="@{/login}" method="POST" class="w-full space-y-4">
+        <div class="relative group">
+            <input type="tel" name="username" placeholder="Téléphone (+221)"
+                class="w-full p-5 pl-14 bg-white border-2 border-gray-100 rounded-[2rem] focus:border-emerald-500 outline-none font-black shadow-sm transition-all group-hover:border-gray-200">
+            <div class="absolute left-5 top-5 text-emerald-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5">
+                    <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+            </div>
+        </div>
+        <div class="relative group">
+            <input type="password" name="password" placeholder="Mot de passe"
+                class="w-full p-5 pl-14 bg-white border-2 border-gray-100 rounded-[2rem] focus:border-emerald-500 outline-none font-black shadow-sm transition-all group-hover:border-gray-200">
+            <div class="absolute left-5 top-5 text-emerald-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+            </div>
+        </div>
+        <button type="submit"
+            class="w-full bg-emerald-600 text-white py-5 rounded-[2rem] font-black text-xl shadow-2xl shadow-emerald-200 active:scale-95 transition-all hover:bg-emerald-700">
+            Se connecter
+        </button>
+    </form>
+
+    <p class="text-sm font-black text-gray-400">
+        Nouveau ? <a th:href="@{/register}" class="text-emerald-700 hover:underline">Créer un compte</a>
+    </p>
+</section>
+
+</html>

@@ -1,0 +1,38 @@
+<section class="space-y-6 animate-in slide-in-from-bottom-5 duration-500" xmlns:th="http://www.thymeleaf.org">
+    <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-black text-gray-900 tracking-tight" th:text="${t.meds}">Mes Médocs</h2>
+        <button class="bg-emerald-600 text-white p-3 rounded-2xl shadow-lg active:scale-95 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="3">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+        </button>
+    </div>
+
+    <div class="space-y-4">
+        <div th:each="med : ${medications}"
+            class="bg-white p-6 rounded-[2.5rem] border-2 border-gray-50 flex items-center justify-between shadow-sm group hover:border-emerald-100 transition-all">
+            <div class="flex items-center gap-5">
+                <div
+                    class="bg-emerald-50 p-4 rounded-2xl text-emerald-600 group-hover:bg-emerald-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z" />
+                        <path d="m8.5 8.5 7 7" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="font-black text-xl text-gray-900 leading-tight" th:text="${med.name}">Nom</h4>
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1"
+                        th:text="${med.dosage} + ' • ' + ${med.frequency} + ' • ' + ${med.duration}">Détails</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-end gap-1">
+                <span class="text-[10px] font-black px-3 py-1 rounded-full border transition-all"
+                    th:classappend="${med.taken ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-orange-50 text-orange-600 border-orange-100'}"
+                    th:text="${med.taken ? 'TERMINÉ' : 'EN COURS'}">STATUT</span>
+            </div>
+        </div>
+    </div>
+</section>

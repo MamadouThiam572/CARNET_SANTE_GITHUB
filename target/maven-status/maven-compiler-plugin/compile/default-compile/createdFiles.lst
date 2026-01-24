@@ -1,0 +1,11 @@
+com\senegalsante\service\TranslationService.class
+com\senegalsante\model\Medication.class
+com\senegalsante\controller\WebController.class
+com\senegalsante\service\AiService.class
+com\senegalsante\model\Profile.class
+com\senegalsante\model\Symptom.class
+com\senegalsante\SenegalSanteApplication.class
+com\senegalsante\repository\UserRepository.class
+com\senegalsante\repository\ProfileRepository.class
+com\senegalsante\repository\MedicationRepository.class
+com\senegalsante\model\User.class
