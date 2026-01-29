@@ -8,4 +8,8 @@ import java.util.List;
 
 public interface MedicationRepository extends JpaRepository<Medication, Long> {
     List<Medication> findByUser(User user);
+
+    List<Medication> findByUserAndNameContainingIgnoreCase(User user, String name);
+
+    List<Medication> findByProfile(com.senegalsante.model.Profile profile);
 }

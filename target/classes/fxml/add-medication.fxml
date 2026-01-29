@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns="http://javafx.com/javafx/17" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.senegalsante.controller.javafx.DashboardController"
+      spacing="15" prefWidth="550" styleClass="main-container" style="-fx-padding: 25; -fx-background-color: white; -fx-background-radius: 15;">
+    
+    <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="💊" style="-fx-font-size: 24px;"/>
+        <Label text="Nouveau Médicament" styleClass="label-title" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+    </HBox>
+    
+    <Separator/>
+    
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: white;" prefHeight="500">
+        <VBox spacing="20">
+            <!-- Informations de base -->
+            <VBox spacing="10">
+                <Label text="IDENTIFICATION DU MÉDICAMENT" style="-fx-text-fill: #64748b; -fx-font-size: 11px; -fx-font-weight: bold; -fx-letter-spacing: 1px;"/>
+                <GridPane hgap="15" vgap="12">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="150" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    
+                    <Label text="Nom :" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                    <TextField fx:id="medNameField" promptText="ex: Paracétamol, Amoxicilline..." GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="text-field" />
+                    
+                    <Label text="Dosage :" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                    <TextField fx:id="medDosageField" promptText="ex: 500mg, 1 gélule..." GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                </GridPane>
+            </VBox>
+
+            <Separator/>
+
+            <!-- Fréquence et Heures -->
+            <VBox spacing="10">
+                <Label text="PLANIFICATION DES PRISES" style="-fx-text-fill: #64748b; -fx-font-size: 11px; -fx-font-weight: bold; -fx-letter-spacing: 1px;"/>
+                <GridPane hgap="15" vgap="12">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="150" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    
+                    <Label text="Fréquence :" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                    <ComboBox fx:id="medFrequencyCombo" promptText="Choisir la fréquence" maxWidth="Infinity" GridPane.rowIndex="0" GridPane.columnIndex="1" onAction="#handleFrequencyChange" />
+                </GridPane>
+                
+                <VBox fx:id="intakeTimesContainer" spacing="10" style="-fx-background-color: #f8fafc; -fx-padding: 15; -fx-background-radius: 10;">
+                    <Label text="Heures de prise suggérées :" style="-fx-font-size: 13px; -fx-text-fill: #475569;"/>
+                    <!-- Contenu dynamique généré par le contrôleur -->
+                    <Label text="Sélectionnez une fréquence pour voir les heures" styleClass="label-muted" fx:id="intakePlaceholderLabel"/>
+                </VBox>
+            </VBox>
+
+            <Separator/>
+
+            <!-- Durée -->
+            <VBox spacing="10">
+                <Label text="DURÉE DU TRAITEMENT" style="-fx-text-fill: #64748b; -fx-font-size: 11px; -fx-font-weight: bold; -fx-letter-spacing: 1px;"/>
+                <GridPane hgap="15" vgap="12">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="150" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    
+                    <Label text="Date de début :" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                    <DatePicker fx:id="medStartDatePicker" maxWidth="Infinity" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                    
+                    <Label text="Durée (jours) :" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                    <TextField fx:id="medDurationDaysField" promptText="ex: 7" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                </GridPane>
+            </VBox>
+
+            <Separator/>
+
+            <!-- Notes -->
+            <VBox spacing="10">
+                <Label text="CONSIGNES MÉDICALES" style="-fx-text-fill: #64748b; -fx-font-size: 11px; -fx-font-weight: bold; -fx-letter-spacing: 1px;"/>
+                <TextArea fx:id="medNotesArea" promptText="ex: À prendre au milieu du repas. Éviter l'exposition au soleil..." prefHeight="80" wrapText="true" />
+            </VBox>
+        </VBox>
+    </ScrollPane>
+    
+    <Region VBox.vgrow="ALWAYS"/>
+    
+    <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 10 0 0 0;">
+        <Button text="Annuler" onAction="#handleCancelDialog" styleClass="btn-secondary" prefWidth="120" />
+        <Button text="Enregistrer" onAction="#handleSaveMedication" styleClass="btn-primary" prefWidth="150" />
+    </HBox>
+</VBox>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<!--
+    Écran de Connexion - Sénégal Santé
+    
+    Structure :
+    - StackPane : Conteneur principal avec fond dégradé
+    - VBox : Carte de connexion centrée
+    - TextField/PasswordField : Champs de saisie
+    - Button : Bouton de connexion
+    - Hyperlink : Lien vers l'inscription
+-->
+
+<StackPane xmlns="http://javafx.com/javafx/17" 
+           xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="com.senegalsante.controller.javafx.LoginController"
+           styleClass="login-container">
+    
+    <!-- Carte de Connexion -->
+    <VBox styleClass="login-card" alignment="CENTER" spacing="24" maxWidth="450">
+        <padding>
+            <Insets top="48" right="48" bottom="48" left="48"/>
+        </padding>
+        
+        <!-- En-tête -->
+        <VBox alignment="CENTER" spacing="8">
+            <!-- Icône ou Logo (optionnel) -->
+            <!-- <ImageView fitWidth="80" fitHeight="80" preserveRatio="true">
+                <image>
+                    <Image url="@../images/logo.png"/>
+                </image>
+            </ImageView> -->
+            
+            <!-- Titre -->
+            <Label text="Sénégal Santé" styleClass="login-title"/>
+            <Label text="Carnet Numérique" styleClass="login-subtitle"/>
+            
+            <Region minHeight="16"/>
+            
+            <Label text="Bienvenue ! Connectez-vous à votre compte" 
+                   styleClass="label-muted" 
+                   wrapText="true" 
+                   textAlignment="CENTER"/>
+        </VBox>
+        
+        <!-- Formulaire de Connexion -->
+        <VBox spacing="20">
+            <!-- Champ Email -->
+            <VBox spacing="8">
+                <Label text="Adresse Email" styleClass="label-subheading"/>
+                <TextField fx:id="emailField" 
+                          promptText="exemple@email.com"
+                          styleClass="text-field"/>
+            </VBox>
+            
+            <!-- Champ Mot de Passe -->
+            <VBox spacing="8">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Mot de Passe" styleClass="label-subheading"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <!-- Lien "Mot de passe oublié" (optionnel) -->
+                    <!-- <Hyperlink text="Oublié ?" styleClass="label-muted"/> -->
+                </HBox>
+                <PasswordField fx:id="passwordField" 
+                              promptText="••••••••"
+                              styleClass="text-field"/>
+            </VBox>
+            
+            <!-- Message d'Erreur -->
+            <Label fx:id="errorLabel" 
+                   text="" 
+                   styleClass="label-muted"
+                   textFill="#e74c3c"
+                   wrapText="true"
+                   visible="false"
+                   managed="false"/>
+            
+            <!-- Bouton de Connexion -->
+            <Button fx:id="loginButton" 
+                    text="Se Connecter" 
+                    styleClass="button, btn-primary, btn-large"
+                    maxWidth="Infinity"
+                    onAction="#handleLogin"
+                    defaultButton="true"/>
+        </VBox>
+        
+        <!-- Séparateur -->
+        <HBox alignment="CENTER" spacing="12">
+            <Separator HBox.hgrow="ALWAYS" maxWidth="100"/>
+            <Label text="ou" styleClass="label-muted"/>
+            <Separator HBox.hgrow="ALWAYS" maxWidth="100"/>
+        </HBox>
+        
+        <!-- Lien vers l'Inscription -->
+        <HBox alignment="CENTER" spacing="8">
+            <Label text="Vous n'avez pas de compte ?" styleClass="label-muted"/>
+            <Hyperlink fx:id="registerLink" 
+                      text="Créer un compte" 
+                      onAction="#handleRegister"
+                      style="-fx-text-fill: #3498db; -fx-font-weight: 600;"/>
+        </HBox>
+        
+        <!-- Pied de Page -->
+        <VBox alignment="CENTER" spacing="8">
+            <Region minHeight="16"/>
+            <Label text="© 2026 Sénégal Santé" 
+                   styleClass="label-muted" 
+                   style="-fx-font-size: 12px;"/>
+            <Label text="Application 100% Hors Ligne" 
+                   styleClass="label-muted" 
+                   style="-fx-font-size: 11px;"/>
+        </VBox>
+    </VBox>
+    
+</StackPane>

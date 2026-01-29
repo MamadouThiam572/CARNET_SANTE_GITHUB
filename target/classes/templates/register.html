@@ -1,54 +1,64 @@
-<!DOCTYPE html>
-<html th:replace="~{layout :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout :: layout(~{::section}, null)}" xmlns:th="http://www.thymeleaf.org">
 <section class="space-y-8 animate-in slide-in-from-bottom-5 duration-700">
     <div class="text-center">
-        <h2 class="text-4xl font-black text-emerald-900 tracking-tight">Inscription</h2>
-        <p class="text-gray-500 font-bold text-lg mt-2">Créez votre dossier médical</p>
+        <h2 class="text-4xl font-black text-emerald-900 tracking-tight" th:text="${t.register_title}">Inscription</h2>
+        <p class="text-gray-500 font-bold text-lg mt-2" th:text="${t.register_subtitle}">Créez votre dossier médical</p>
     </div>
 
-    <form th:action="@{/register}" method="POST" class="space-y-5">
+    <!-- Alertes Feedback -->
+    <div th:if="${error}"
+        class="bg-red-50 border-2 border-red-100 text-red-600 p-4 rounded-2xl font-black text-center mb-4">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${success}"
+        class="bg-emerald-50 border-2 border-emerald-100 text-emerald-600 p-4 rounded-2xl font-black text-center mb-4">
+        <p th:text="${success}"></p>
+    </div>
+
+    <form th:action="@{/register}" th:object="${registrationRequest}" method="POST" class="space-y-5">
         <div class="grid grid-cols-2 gap-4">
-            <input type="text" name="firstName" placeholder="Prénom"
+            <input type="text" th:field="*{firstName}" th:placeholder="${t.firstname}" required
                 class="w-full p-5 bg-white border-2 border-gray-100 rounded-[1.5rem] focus:border-emerald-500 outline-none font-black shadow-sm">
-            <input type="text" name="lastName" placeholder="Nom"
+            <input type="text" th:field="*{lastName}" th:placeholder="${t.lastname}" required
                 class="w-full p-5 bg-white border-2 border-gray-100 rounded-[1.5rem] focus:border-emerald-500 outline-none font-black shadow-sm">
         </div>
 
-        <input type="tel" name="phone" placeholder="Numéro de téléphone"
+        <input type="tel" th:field="*{phoneNumber}" th:placeholder="${t.phone_placeholder}" required
+            class="w-full p-5 bg-white border-2 border-gray-100 rounded-[1.5rem] focus:border-emerald-500 outline-none font-black shadow-sm">
+
+        <input type="email" th:field="*{email}" placeholder="Email"
             class="w-full p-5 bg-white border-2 border-gray-100 rounded-[1.5rem] focus:border-emerald-500 outline-none font-black shadow-sm">
 
         <div class="relative group">
-            <input type="password" name="password" placeholder="Définir un mot de passe"
+            <input type="password" th:field="*{password}" th:placeholder="${t.password_placeholder}" required
                 class="w-full p-5 bg-white border-2 border-gray-100 rounded-[1.5rem] focus:border-emerald-500 outline-none font-black shadow-sm">
         </div>
 
         <div class="bg-blue-50/50 p-6 rounded-[2rem] border-2 border-dashed border-blue-100">
-            <p class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-3">Informations Vitales</p>
-            <div class="flex gap-4">
-                <select name="bloodGroup"
-                    class="flex-1 p-4 bg-white border-2 border-blue-100 rounded-2xl font-black outline-none appearance-none">
-                    <option value="">Groupe Sanguin</option>
-                    <option value="O+">O+</option>
-                    <option value="A+">A+</option>
-                    <option value="B+">B+</option>
-                </select>
-                <select name="gender"
-                    class="flex-1 p-4 bg-white border-2 border-blue-100 rounded-2xl font-black outline-none appearance-none">
-                    <option value="">Genre</option>
-                    <option value="M">Homme</option>
-                    <option value="F">Femme</option>
+            <p class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-3" th:text="${t.vital_info}">
+                Informations Vitales</p>
+            <div class="space-y-4">
+                <input type="date" th:field="*{birthDate}" required
+                    class="w-full p-4 bg-white border-2 border-blue-100 rounded-2xl font-black outline-none appearance-none">
+                <select th:field="*{gender}" required
+                    class="w-full p-4 bg-white border-2 border-blue-100 rounded-2xl font-black outline-none appearance-none">
+                    <option value="" th:text="${t.gender}">Genre</option>
+                    <option value="M" th:text="${t.male}">Homme</option>
+                    <option value="F" th:text="${t.female}">Femme</option>
                 </select>
             </div>
         </div>
 
         <button type="submit"
-            class="w-full bg-emerald-600 text-white py-5 rounded-[2rem] font-black text-xl shadow-2xl shadow-emerald-200 active:scale-95 transition-all hover:bg-emerald-700">
+            class="w-full bg-emerald-600 text-white py-5 rounded-[2rem] font-black text-xl shadow-2xl shadow-emerald-200 active:scale-95 transition-all hover:bg-emerald-700"
+            th:text="${t.start_carnet}">
             Commencer mon carnet
         </button>
     </form>
 
     <p class="text-center text-sm font-black text-gray-400 pb-8">
-        Déjà inscrit ? <a th:href="@{/login}" class="text-emerald-700 hover:underline">Se connecter</a>
+        <span th:text="${t.already_account}">Déjà inscrit ?</span> <a th:href="@{/login}"
+            class="text-emerald-700 hover:underline" th:text="${t.login_btn}">Se connecter</a>
     </p>
 </section>
 

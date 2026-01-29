@@ -1,0 +1,298 @@
+/* ========================================
+   SÉNÉGAL SANTÉ - MASTERPIECE CSS
+   Design Médical Premium et Ultra-Moderne
+   ======================================== */
+
+.root {
+    /* Palette de Couleurs Médicale Premium (Inspirée de Tailwind Slate & Sky) */
+    -primary-dark: #0f172a;
+    /* Navy Deep */
+    -primary: #0c4a6e;
+    /* Blue Medicine */
+    -primary-light: #1e293b;
+    /* Sidebar Bg */
+
+    -secondary: #0284c7;
+    /* Medical Action */
+    -secondary-light: #38bdf8;
+
+    -accent: #10b981;
+    /* Health Green */
+    -accent-light: #34d399;
+
+    -background: #f8fafc;
+    /* Sky Gray Bg */
+    -card-bg: #ffffff;
+
+    -text-dark: #0f172a;
+    -text-medium: #475569;
+    -text-light: #94a3b8;
+
+    -danger: #ef4444;
+    -warning: #f59e0b;
+    -success: #10b981;
+
+    -border-color: #e2e8f0;
+    -border-radius: 12px;
+    -border-radius-lg: 20px;
+
+    -fx-background-color: -background;
+    -fx-font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* ========================================
+   LAYOUTS GLOBAUX
+   ======================================== */
+.main-container {
+    -fx-background-color: -background;
+}
+
+.sidebar {
+    -fx-background-color: -primary-dark;
+    -fx-padding: 30 15 30 15;
+    -fx-pref-width: 260px;
+    -fx-border-color: rgba(255, 255, 255, 0.05);
+    -fx-border-width: 0 1 0 0;
+}
+
+.content-area {
+    -fx-padding: 35;
+    -fx-background-color: -background;
+}
+
+/* ========================================
+   DESIGN DES CARTES (GLASSMORPHISM LIGHT)
+   ======================================== */
+.card {
+    -fx-background-color: -card-bg;
+    -fx-background-radius: 12px;
+    -fx-padding: 25;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.04), 15, 0, 0, 5);
+    -fx-border-color: -border-color;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+.card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 20, 0, 0, 8);
+}
+
+/* Cartes de Résumé (Summary Cards) */
+.summary-card {
+    -fx-background-radius: 12px;
+    -fx-padding: 20;
+    -fx-min-width: 250;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.05), 10, 0, 0, 4);
+}
+
+.summary-blue {
+    -fx-background-color: linear-gradient(to bottom right, #0ea5e9, #0284c7);
+}
+
+.summary-green {
+    -fx-background-color: linear-gradient(to bottom right, #10b981, #059669);
+}
+
+.summary-orange {
+    -fx-background-color: linear-gradient(to bottom right, #f59e0b, #d97706);
+}
+
+.summary-card .label {
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.summary-card .value {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+}
+
+/* ========================================
+   TYPOGRAPHIE
+   ======================================== */
+.label-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: 800;
+    -fx-text-fill: -primary-dark;
+}
+
+.label-subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: -text-light;
+}
+
+.section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -primary-dark;
+}
+
+/* ========================================
+   COMPOSANTS DE NAVIGATION (SIDEBAR)
+   ======================================== */
+.sidebar-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94a3b8;
+    -fx-font-weight: 500;
+    -fx-padding: 14 18;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+    -fx-alignment: center-left;
+}
+
+.sidebar-item:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-text-fill: white;
+}
+
+.sidebar-item-active {
+    -fx-background-color: rgba(2, 132, 199, 0.15);
+    -fx-text-fill: #38bdf8;
+    -fx-border-color: #0284c7;
+    -fx-border-width: 0 0 0 4;
+}
+
+/* ========================================
+   BOUTONS MODERNES
+   ======================================== */
+.button {
+    -fx-cursor: hand;
+    -fx-font-weight: 600;
+    -fx-background-radius: 10px;
+    -fx-padding: 12 24;
+}
+
+.btn-primary {
+    -fx-background-color: -secondary;
+    -fx-text-fill: white;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #0369a1;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.btn-outline {
+    -fx-background-color: transparent;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1.5;
+    -fx-text-fill: -text-medium;
+}
+
+.btn-outline:hover {
+    -fx-background-color: #f1f5f9;
+    -fx-border-color: -text-light;
+}
+
+/* ========================================
+   TABLEAUX MODERNES
+   ======================================== */
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 12px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f8fafc;
+    -fx-padding: 15 10;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: -border-color;
+}
+
+.table-row-cell {
+    -fx-padding: 10 0;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #f1f5f9;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #f0f9ff;
+}
+
+/* ========================================
+   SCROLLBAR STYLÉE
+   ======================================== */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 6;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #cbd5e1;
+    -fx-background-radius: 10;
+}
+
+/* ========================================
+   COMPOSANTS SPÉCIFIQUES MÉDICAUX
+   ======================================== */
+.med-card {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 15;
+    -fx-padding: 15;
+}
+
+.med-time-badge {
+    -fx-background-color: #f0f9ff;
+    -fx-text-fill: #0369a1;
+    -fx-padding: 4 10;
+    -fx-background-radius: 20;
+    -fx-font-weight: 700;
+}
+
+.status-check {
+    -fx-background-color: #ecfdf5;
+    -fx-text-fill: #059669;
+    -fx-background-radius: 20;
+}
+
+.status-check:hover {
+    -fx-background-color: #d1fae5;
+}
+
+.card-small {
+    -fx-background-color: white;
+    -fx-border-color: #f1f5f9;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 8 12;
+}
+
+.text-bold {
+    -fx-font-weight: 700;
+}
+
+.label-muted {
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 13px;
+}
+
+.text-field,
+.combo-box,
+.date-picker {
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #e2e8f0;
+    -fx-padding: 8;
+}
+
+.text-field:focused,
+.combo-box:focused,
+.date-picker:focused {
+    -fx-border-color: -secondary;
+    -fx-background-color: white;
+}

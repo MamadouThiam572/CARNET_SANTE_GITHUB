@@ -1,0 +1,32 @@
+<html th:replace="~{layout :: layout(~{::section}, null)}" xmlns:th="http://www.thymeleaf.org">
+<section class="space-y-6 animate-in fade-in duration-500">
+    <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-black text-gray-900 tracking-tight">Mon Suivi</h2>
+        <a th:href="@{/health/add}"
+            class="bg-emerald-600 text-white px-4 py-3 rounded-2xl shadow-lg shadow-emerald-200 font-bold active:scale-95 transition-all">
+            + Nouveau
+        </a>
+    </div>
+
+    <div class="space-y-4">
+        <div th:if="${symptoms == null or symptoms.empty}"
+            class="text-center py-10 bg-white rounded-[2.5rem] border-2 border-dashed border-gray-200">
+            <p class="text-gray-400 font-medium">Aucun historique de santé.</p>
+        </div>
+
+        <div th:each="sym : ${symptoms}"
+            class="bg-white p-6 rounded-[2rem] border-2 border-gray-50 shadow-sm flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-gray-400 uppercase"
+                    th:text="${#temporals.format(sym.onsetDate, 'dd MMM yyyy HH:mm')}">Date</span>
+                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-black"
+                    th:text="'Niveau ' + ${sym.severity}">Niveau 5</span>
+            </div>
+            <h3 class="font-black text-xl text-gray-800" th:text="${sym.description}">Description</h3>
+            <p th:if="${sym.notes != null and !sym.notes.empty}" class="text-gray-500 bg-gray-50 p-3 rounded-xl text-sm"
+                th:text="${sym.notes}">Notes...</p>
+        </div>
+    </div>
+</section>
+
+</html>

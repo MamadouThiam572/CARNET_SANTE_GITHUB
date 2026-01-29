@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.senegalsante.controller.javafx.DashboardController"
+      spacing="20" prefWidth="450" styleClass="main-container" style="-fx-padding: 30;">
+    
+    <Label text="❤️ Nouvel Enregistrement" styleClass="label-title" style="-fx-font-size: 20px;"/>
+    
+    <VBox spacing="15">
+        <VBox spacing="5">
+            <Label text="Concerne qui ?" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="recordMemberCombo" promptText="Sélectionner le membre" maxWidth="Infinity" />
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Type d'enregistrement" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="recordTypeCombo" promptText="Choisir le type" maxWidth="Infinity" onAction="#handleHealthRecordTypeChange" />
+        </VBox>
+
+        <Separator />
+
+        <!-- CHAMPS DYNAMIQUES -->
+        <StackPane>
+            <!-- DOULEUR / SYMPTÔME -->
+            <VBox fx:id="panePainSymptom" spacing="15" visible="false">
+                <HBox spacing="10">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="Zone du corps" style="-fx-font-size: 13px;"/>
+                        <ComboBox fx:id="bodyZoneCombo" promptText="Zone" maxWidth="Infinity" />
+                    </VBox>
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="Évolution" style="-fx-font-size: 13px;"/>
+                        <ComboBox fx:id="evolutionCombo" promptText="Évolution" maxWidth="Infinity" />
+                    </VBox>
+                </HBox>
+                <VBox spacing="5">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Intensité (0 à 10)" style="-fx-font-size: 13px;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Label fx:id="intensityValueLabel" text="5" style="-fx-font-weight: bold; -fx-text-fill: #3b82f6;"/>
+                    </HBox>
+                    <Slider fx:id="intensitySlider" min="0" max="10" value="5" showTickMarks="true" showTickLabels="true" majorTickUnit="1" snapToTicks="true" />
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Durée / Fréquence" style="-fx-font-size: 13px;"/>
+                    <TextField fx:id="recordDurationField" promptText="ex: Depuis ce matin, épisodique..." />
+                </VBox>
+            </VBox>
+
+            <!-- PARAMÈTRES VITAUX -->
+            <GridPane fx:id="paneVitals" hgap="15" vgap="15" visible="false">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS" />
+                    <ColumnConstraints hgrow="ALWAYS" />
+                </columnConstraints>
+                <VBox spacing="5" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                    <Label text="Température (°C)" style="-fx-font-size: 13px;"/>
+                    <TextField fx:id="tempField" promptText="37.0" />
+                </VBox>
+                <VBox spacing="5" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                    <Label text="Poids (kg)" style="-fx-font-size: 13px;"/>
+                    <TextField fx:id="weightField" promptText="70.5" />
+                </VBox>
+                <VBox spacing="5" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                    <Label text="Tension (Sys/Dia)" style="-fx-font-size: 13px;"/>
+                    <HBox alignment="CENTER_LEFT" spacing="5">
+                        <TextField fx:id="sysField" promptText="120" prefWidth="60" />
+                        <Label text="/" />
+                        <TextField fx:id="diaField" promptText="80" prefWidth="60" />
+                    </HBox>
+                </VBox>
+                <VBox spacing="5" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                    <Label text="Pouls (bpm)" style="-fx-font-size: 13px;"/>
+                    <TextField fx:id="heartRateField" promptText="72" />
+                </VBox>
+            </GridPane>
+
+            <!-- BIEN-ÊTRE -->
+            <VBox fx:id="paneWellness" spacing="15" visible="false">
+                <VBox spacing="5">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Note de bien-être global" style="-fx-font-size: 13px;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Label fx:id="wellnessValueLabel" text="80%" style="-fx-font-weight: bold; -fx-text-fill: #10b981;"/>
+                    </HBox>
+                    <Slider fx:id="wellnessSlider" min="0" max="100" value="80" showTickMarks="true" majorTickUnit="20" />
+                </VBox>
+            </VBox>
+
+            <!-- OBSERVATION MÉDICALE -->
+            <VBox fx:id="paneObservation" spacing="15" visible="true">
+                <!-- Par défaut ou si rien d'autre n'est sélectionné -->
+            </VBox>
+        </StackPane>
+
+        <VBox spacing="5">
+            <Label text="Observations / Notes :" style="-fx-font-size: 13px;"/>
+            <TextArea fx:id="recordObservationsArea" promptText="Précisions complémentaires..." prefHeight="80" wrapText="true" />
+        </VBox>
+    </VBox>
+    
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#handleCancelDialog" styleClass="btn-secondary" />
+        <Button text="Enregistrer l'entrée" onAction="#handleSaveHealthRecord" styleClass="btn-primary" />
+    </HBox>
+</VBox>

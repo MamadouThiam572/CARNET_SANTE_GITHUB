@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainContainer" xmlns="http://javafx.com/javafx/17" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.senegalsante.controller.javafx.DashboardController"
+            styleClass="main-container">
+    
+    <left>
+        <VBox styleClass="sidebar" spacing="10">
+            <VBox alignment="CENTER" spacing="10">
+                <padding><Insets bottom="40"/></padding>
+                <Label text="🏥" style="-fx-font-size: 40px;"/>
+                <Label text="SÉNÉGAL SANTÉ" style="-fx-text-fill: white; -fx-font-weight: 800; -fx-font-size: 18px;"/>
+            </VBox>
+            
+            <Button text="🏠  Tableau de Bord" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleDashboard"/>
+            <Button text="💊  Médicaments" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleMedications"/>
+            <Button text="📅  Rendez-vous" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleAppointments" />
+            <Button text="❤️  Suivi Santé" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleHealthTracking" />
+            <Button text="👨‍👩‍👧  Ma Famille" styleClass="sidebar-item, sidebar-item-active" maxWidth="Infinity" alignment="CENTER_LEFT" />
+            <Button text="📋  Ordonnances" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handlePrescriptions" />
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button fx:id="logoutButton" text="🚪  Déconnexion" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleLogout" style="-fx-text-fill: #ef4444;"/>
+        </VBox>
+    </left>
+    
+    <center>
+        <VBox styleClass="content-area" spacing="30">
+            <Label text="Ma Famille" styleClass="label-title"/>
+            <Label text="Suivez la santé de vos proches et gérez leurs traitements." styleClass="label-subtitle"/>
+            
+            <HBox spacing="15">
+                <Button text="+ Ajouter un membre" styleClass="btn-primary" onAction="#handleAddFamilyMember" />
+            </HBox>
+            
+            <FlowPane fx:id="familyFlowPane" hgap="25" vgap="25">
+                <!-- Les membres seront chargés dynamiquement ici -->
+            </FlowPane>
+        </VBox>
+    </center>
+</BorderPane>

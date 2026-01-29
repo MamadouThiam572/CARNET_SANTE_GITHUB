@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainContainer" xmlns="http://javafx.com/javafx/17" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.senegalsante.controller.javafx.DashboardController"
+            styleClass="main-container">
+    
+    <left>
+        <VBox styleClass="sidebar" spacing="10">
+            <VBox alignment="CENTER" spacing="10">
+                <padding><Insets bottom="40"/></padding>
+                <Label text="🏥" style="-fx-font-size: 40px;"/>
+                <Label text="SÉNÉGAL SANTÉ" style="-fx-text-fill: white; -fx-font-weight: 800; -fx-font-size: 18px;"/>
+            </VBox>
+            
+            <Button text="🏠  Tableau de Bord" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleDashboard"/>
+            <Button text="💊  Médicaments" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleMedications"/>
+            <Button text="📅  Rendez-vous" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleAppointments" />
+            <Button text="❤️  Suivi Santé" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleHealthTracking" />
+            <Button text="👨‍👩‍👧  Ma Famille" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleFamily" />
+            <Button text="📋  Ordonnances" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handlePrescriptions" />
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="⚙️  Paramètres" styleClass="sidebar-item, sidebar-item-active" maxWidth="Infinity" alignment="CENTER_LEFT" />
+            <Button fx:id="logoutButton" text="🚪  Déconnexion" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleLogout" style="-fx-text-fill: #ef4444;"/>
+        </VBox>
+    </left>
+    
+    <center>
+        <VBox styleClass="content-area" spacing="30">
+            <Label text="Paramètres &amp; Profil" styleClass="label-title"/>
+            <Label text="Modifiez vos informations personnelles et configurez l'application." styleClass="label-subtitle"/>
+            
+            <VBox styleClass="card" spacing="20" maxWidth="600">
+                <Label text="Informations Personnelles" styleClass="section-title"/>
+                <GridPane hgap="20" vgap="15">
+                    <Label text="Prénom :" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <TextField fx:id="profileFirstNameField" GridPane.columnIndex="1" GridPane.rowIndex="0" HBox.hgrow="ALWAYS"/>
+                    
+                    <Label text="Nom :" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <TextField fx:id="profileLastNameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    
+                    <Label text="Email :" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <TextField fx:id="profileEmailField" GridPane.columnIndex="1" GridPane.rowIndex="2" disable="true"/>
+                    
+                    <Label text="Téléphone :" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <TextField fx:id="profilePhoneField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                </GridPane>
+                <Button text="Enregistrer les modifications" styleClass="btn-primary" />
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,135 @@
+<html th:replace="~{layout :: layout(~{::section}, null)}" xmlns:th="http://www.thymeleaf.org">
+<section class="space-y-6 animate-in slide-in-from-bottom-5 duration-500">
+    <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-black text-gray-900 tracking-tight">Santé & Douleur</h2>
+        <a th:href="@{/}" class="bg-gray-100 text-gray-500 p-3 rounded-2xl shadow-sm active:scale-95 transition-all">
+            Retour
+        </a>
+    </div>
+
+    <div class="bg-blue-50 border-2 border-blue-100 p-5 rounded-[2rem] text-blue-800 text-sm font-medium">
+        Décrivez vos symptômes pour recevoir un conseil immédiat de notre assistant virtuel.
+    </div>
+
+    <form th:action="@{/health/add}" method="POST" id="healthForm"
+        class="space-y-6 bg-white p-6 rounded-[2.5rem] shadow-sm border-2 border-gray-50">
+
+        <!-- 1. Who -->
+        <div th:if="${session.userId != null}">
+            <!-- Assuming profiles are available in model, if not controller needs to add them. 
+                  Checking HealthController: addHealthForm does setupTranslations but doesn't add profiles explicitly? 
+                  Wait, HealthController.addHealthForm ONLY adds title. It does NOT add user profiles.
+                  I need to fix Controller to add profiles first. But assuming I can get user from session or fix controller later.
+                  Actually, I should fix controller first or rely on a global attribute if exists? 
+                  Better: Fix controller in next step. For now write the HTML expecting 'profiles'. -->
+        </div>
+
+        <!-- 2. Type of Pain -->
+        <div>
+            <label class="block text-sm font-bold text-gray-400 uppercase mb-3 ml-2">Type de Douleur</label>
+            <div class="grid grid-cols-2 gap-3">
+                <label class="cursor-pointer">
+                    <input type="radio" name="painType" value="HEADACHE" class="peer hidden" required>
+                    <div
+                        class="bg-gray-50 border-2 border-gray-100 p-4 rounded-2xl text-center peer-checked:bg-emerald-50 peer-checked:border-emerald-500 peer-checked:text-emerald-700 transition-all">
+                        <span class="text-2xl block mb-1">🤕</span>
+                        <span class="font-bold text-sm">Tête</span>
+                    </div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" name="painType" value="ABDOMINAL" class="peer hidden">
+                    <div
+                        class="bg-gray-50 border-2 border-gray-100 p-4 rounded-2xl text-center peer-checked:bg-emerald-50 peer-checked:border-emerald-500 peer-checked:text-emerald-700 transition-all">
+                        <span class="text-2xl block mb-1">🤢</span>
+                        <span class="font-bold text-sm">Ventre</span>
+                    </div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" name="painType" value="MUSCLE" class="peer hidden">
+                    <div
+                        class="bg-gray-50 border-2 border-gray-100 p-4 rounded-2xl text-center peer-checked:bg-emerald-50 peer-checked:border-emerald-500 peer-checked:text-emerald-700 transition-all">
+                        <span class="text-2xl block mb-1">💪</span>
+                        <span class="font-bold text-sm">Muscle</span>
+                    </div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" name="painType" value="JOINT" class="peer hidden">
+                    <div
+                        class="bg-gray-50 border-2 border-gray-100 p-4 rounded-2xl text-center peer-checked:bg-emerald-50 peer-checked:border-emerald-500 peer-checked:text-emerald-700 transition-all">
+                        <span class="text-2xl block mb-1">🦵</span>
+                        <span class="font-bold text-sm">Articulation</span>
+                    </div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" name="painType" value="DENTAL" class="peer hidden">
+                    <div
+                        class="bg-gray-50 border-2 border-gray-100 p-4 rounded-2xl text-center peer-checked:bg-emerald-50 peer-checked:border-emerald-500 peer-checked:text-emerald-700 transition-all">
+                        <span class="text-2xl block mb-1">🦷</span>
+                        <span class="font-bold text-sm">Dent</span>
+                    </div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" name="painType" value="FEVER" class="peer hidden">
+                    <div
+                        class="bg-gray-50 border-2 border-gray-100 p-4 rounded-2xl text-center peer-checked:bg-emerald-50 peer-checked:border-emerald-500 peer-checked:text-emerald-700 transition-all">
+                        <span class="text-2xl block mb-1">🌡️</span>
+                        <span class="font-bold text-sm">Fièvre</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- 3. Severity -->
+        <div>
+            <label class="block text-sm font-bold text-gray-400 uppercase mb-2 ml-2">Intensité</label>
+            <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-[1.5rem] border-2 border-gray-100">
+                <span class="font-black text-emerald-600 text-xl" id="severityVal">3</span>
+                <input type="range" name="severity" min="1" max="10" value="3"
+                    oninput="document.getElementById('severityVal').innerText = this.value"
+                    class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-emerald-600">
+                <span class="font-black text-gray-300 text-sm">/10</span>
+            </div>
+        </div>
+
+        <!-- 4. Duration -->
+        <div>
+            <label class="block text-sm font-bold text-gray-400 uppercase mb-2 ml-2">Durée</label>
+            <div class="flex gap-2">
+                <label class="flex-1 cursor-pointer">
+                    <input type="radio" name="duration" value="SHORT" class="peer hidden" checked>
+                    <div
+                        class="py-3 bg-gray-50 border border-gray-100 rounded-xl text-center text-xs font-bold text-gray-500 peer-checked:bg-blue-50 peer-checked:text-blue-600 peer-checked:border-blue-200 transition-all">
+                        &lt; 24h
+                    </div>
+                </label>
+                <label class="flex-1 cursor-pointer">
+                    <input type="radio" name="duration" value="MEDIUM" class="peer hidden">
+                    <div
+                        class="py-3 bg-gray-50 border border-gray-100 rounded-xl text-center text-xs font-bold text-gray-500 peer-checked:bg-blue-50 peer-checked:text-blue-600 peer-checked:border-blue-200 transition-all">
+                        24-48h
+                    </div>
+                </label>
+                <label class="flex-1 cursor-pointer">
+                    <input type="radio" name="duration" value="LONG" class="peer hidden">
+                    <div
+                        class="py-3 bg-gray-50 border border-gray-100 rounded-xl text-center text-xs font-bold text-gray-500 peer-checked:bg-red-50 peer-checked:text-red-600 peer-checked:border-red-200 transition-all">
+                        &gt; 48h
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-400 uppercase mb-2 ml-2">Description</label>
+            <input type="text" name="description" placeholder="Détails (ex: coté droit...)"
+                class="w-full p-5 bg-gray-50 border-2 border-gray-100 rounded-[1.5rem] focus:border-emerald-500 outline-none font-bold text-gray-700">
+        </div>
+
+        <button type="submit"
+            class="w-full bg-emerald-600 text-white py-5 rounded-[2rem] font-black text-xl shadow-xl shadow-emerald-200 active:scale-95 transition-all hover:bg-emerald-700">
+            Obtenir Conseil
+        </button>
+    </form>
+</section>
+
+</html>

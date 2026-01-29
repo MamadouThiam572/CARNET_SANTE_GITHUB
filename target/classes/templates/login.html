@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html th:replace="~{layout :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{layout :: layout(~{::section}, null)}" xmlns:th="http://www.thymeleaf.org">
 <section class="flex flex-col items-center justify-center min-h-[70vh] space-y-8 animate-in fade-in duration-700">
     <div class="text-center space-y-2">
         <div
@@ -9,13 +8,23 @@
                 <path d="M12 2v20M2 12h20" />
             </svg>
         </div>
-        <h2 class="text-4xl font-black text-emerald-900 tracking-tight">Bienvenue</h2>
-        <p class="text-gray-500 font-bold text-lg">Accédez à votre carnet</p>
+        <h2 class="text-4xl font-black text-emerald-900 tracking-tight" th:text="${t.welcome_login}">Bienvenue</h2>
+        <p class="text-gray-500 font-bold text-lg" th:text="${t.access_carnet}">Accédez à votre carnet</p>
     </div>
 
-    <form th:action="@{/login}" method="POST" class="w-full space-y-4">
+    <!-- Alertes Feedback -->
+    <div th:if="${error}"
+        class="bg-red-50 border-2 border-red-100 text-red-600 p-4 rounded-2xl font-black text-center mb-4 w-full">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${success}"
+        class="bg-emerald-50 border-2 border-emerald-100 text-emerald-600 p-4 rounded-2xl font-black text-center mb-4 w-full">
+        <p th:text="${success}"></p>
+    </div>
+
+    <form th:action="@{/login}" th:object="${loginRequest}" method="POST" class="w-full space-y-4">
         <div class="relative group">
-            <input type="tel" name="username" placeholder="Téléphone (+221)"
+            <input type="tel" th:field="*{phoneNumber}" th:placeholder="${t.phone_placeholder}" required
                 class="w-full p-5 pl-14 bg-white border-2 border-gray-100 rounded-[2rem] focus:border-emerald-500 outline-none font-black shadow-sm transition-all group-hover:border-gray-200">
             <div class="absolute left-5 top-5 text-emerald-600">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -26,7 +35,7 @@
             </div>
         </div>
         <div class="relative group">
-            <input type="password" name="password" placeholder="Mot de passe"
+            <input type="password" th:field="*{password}" th:placeholder="${t.password_placeholder}" required
                 class="w-full p-5 pl-14 bg-white border-2 border-gray-100 rounded-[2rem] focus:border-emerald-500 outline-none font-black shadow-sm transition-all group-hover:border-gray-200">
             <div class="absolute left-5 top-5 text-emerald-600">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -37,13 +46,15 @@
             </div>
         </div>
         <button type="submit"
-            class="w-full bg-emerald-600 text-white py-5 rounded-[2rem] font-black text-xl shadow-2xl shadow-emerald-200 active:scale-95 transition-all hover:bg-emerald-700">
+            class="w-full bg-emerald-600 text-white py-5 rounded-[2rem] font-black text-xl shadow-2xl shadow-emerald-200 active:scale-95 transition-all hover:bg-emerald-700"
+            th:text="${t.login_btn}">
             Se connecter
         </button>
     </form>
 
     <p class="text-sm font-black text-gray-400">
-        Nouveau ? <a th:href="@{/register}" class="text-emerald-700 hover:underline">Créer un compte</a>
+        <span th:text="${t.no_account}">Nouveau ?</span> <a th:href="@{/register}"
+            class="text-emerald-700 hover:underline" th:text="${t.create_account}">Créer un compte</a>
     </p>
 </section>
 

@@ -1,0 +1,328 @@
+<html th:replace="~{layout :: layout(~{::section}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
+<section class="space-y-6 animate-in slide-in-from-bottom-5 duration-500">
+    <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-black text-gray-900 tracking-tight">Nouveau Traitement</h2>
+        <a th:href="@{/meds}"
+            class="bg-gray-100 text-gray-500 p-3 rounded-2xl shadow-sm active:scale-95 transition-all">
+            Annuler
+        </a>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="flex gap-2 mb-6">
+        <div id="step-bar-1" class="h-2 flex-1 bg-emerald-500 rounded-full transition-all"></div>
+        <div id="step-bar-2" class="h-2 flex-1 bg-gray-200 rounded-full transition-all"></div>
+        <div id="step-bar-3" class="h-2 flex-1 bg-gray-200 rounded-full transition-all"></div>
+        <div id="step-bar-4" class="h-2 flex-1 bg-gray-200 rounded-full transition-all"></div>
+    </div>
+
+    <form th:action="@{/meds/add}" method="POST" id="medForm"
+        class="bg-white p-6 rounded-[2.5rem] shadow-sm border-2 border-gray-50 min-h-[400px] flex flex-col justify-between relative overflow-hidden">
+
+        <!-- Step 1: Info -->
+        <div id="step-1" class="step-content space-y-5">
+            <h3 class="text-xl font-black text-gray-800">1. Quel médicament ?</h3>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-400 uppercase mb-2 ml-2">Pour qui ?</label>
+                <select name="profileId"
+                    class="w-full p-5 bg-emerald-50 border-2 border-emerald-100 rounded-[1.5rem] focus:border-emerald-500 outline-none font-black text-emerald-900 appearance-none">
+                    <option th:each="p : ${profiles}" th:value="${p.id}" th:text="${p.firstName} + ' ' + ${p.lastName}">
+                        Moi</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-400 uppercase mb-2 ml-2">Nom du médicament</label>
+                <input type="text" name="name" placeholder="Ex: Paracétamol" required
+                    class="w-full p-5 bg-emerald-50 border-2 border-emerald-100 rounded-[1.5rem] focus:border-emerald-500 outline-none font-black text-emerald-900 placeholder-emerald-300 text-lg">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-400 uppercase mb-2 ml-2">Dosage</label>
+                <input type="text" name="dosage" placeholder="Ex: 500mg, 1 comprimé" required
+                    class="w-full p-5 bg-gray-50 border-2 border-gray-100 rounded-[1.5rem] focus:border-emerald-500 outline-none font-bold text-lg">
+            </div>
+        </div>
+
+        <!-- Step 2: Fréquence -->
+        <div id="step-2" class="step-content space-y-5 hidden">
+            <h3 class="text-xl font-black text-gray-800">2. À quelle fréquence ?</h3>
+            <input type="hidden" name="frequencyType" id="frequencyType" required>
+
+            <div class="grid grid-cols-1 gap-3">
+                <button type="button" onclick="selectFrequency('DAILY_1')"
+                    class="freq-btn bg-gray-50 p-5 rounded-[1.5rem] border-2 border-gray-100 flex items-center gap-4 hover:border-emerald-500 hover:bg-emerald-50 transition-all text-left group">
+                    <div
+                        class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-xl font-black text-gray-400 group-hover:text-emerald-600 border border-gray-100 group-hover:border-emerald-200">
+                        1x</div>
+                    <div>
+                        <span class="block font-black text-gray-900 text-lg group-hover:text-emerald-900">1 fois par
+                            jour</span>
+                        <span class="text-xs font-bold text-gray-400 group-hover:text-emerald-600/70">Matin ou
+                            Soir</span>
+                    </div>
+                </button>
+
+                <button type="button" onclick="selectFrequency('DAILY_2')"
+                    class="freq-btn bg-gray-50 p-5 rounded-[1.5rem] border-2 border-gray-100 flex items-center gap-4 hover:border-emerald-500 hover:bg-emerald-50 transition-all text-left group">
+                    <div
+                        class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-xl font-black text-gray-400 group-hover:text-emerald-600 border border-gray-100 group-hover:border-emerald-200">
+                        2x</div>
+                    <div>
+                        <span class="block font-black text-gray-900 text-lg group-hover:text-emerald-900">2 fois par
+                            jour</span>
+                        <span class="text-xs font-bold text-gray-400 group-hover:text-emerald-600/70">Matin et
+                            Soir</span>
+                    </div>
+                </button>
+
+                <button type="button" onclick="selectFrequency('DAILY_3')"
+                    class="freq-btn bg-gray-50 p-5 rounded-[1.5rem] border-2 border-gray-100 flex items-center gap-4 hover:border-emerald-500 hover:bg-emerald-50 transition-all text-left group">
+                    <div
+                        class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-xl font-black text-gray-400 group-hover:text-emerald-600 border border-gray-100 group-hover:border-emerald-200">
+                        3x</div>
+                    <div>
+                        <span class="block font-black text-gray-900 text-lg group-hover:text-emerald-900">3 fois par
+                            jour</span>
+                        <span class="text-xs font-bold text-gray-400 group-hover:text-emerald-600/70">Matin, Midi et
+                            Soir</span>
+                    </div>
+                </button>
+
+                <button type="button" onclick="toggleCustomFreq()"
+                    class="freq-btn bg-gray-50 p-5 rounded-[1.5rem] border-2 border-gray-100 flex items-center gap-4 hover:border-emerald-500 hover:bg-emerald-50 transition-all text-left group">
+                    <div
+                        class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-xl font-black text-gray-400 group-hover:text-emerald-600 border border-gray-100 group-hover:border-emerald-200">
+                        ...</div>
+                    <div class="flex-1">
+                        <span class="block font-black text-gray-900 text-lg group-hover:text-emerald-900">Tous les X
+                            jours</span>
+                        <div id="customFreqInput" class="hidden mt-2">
+                            <input type="number" name="everyXDays" placeholder="Nombre de jours"
+                                class="w-full p-2 bg-white border border-gray-300 rounded-lg text-lg font-bold outline-none focus:border-emerald-500">
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3: Heures -->
+        <div id="step-3" class="step-content space-y-5 hidden">
+            <h3 class="text-xl font-black text-gray-800">3. À quelle heure ?</h3>
+            <p class="text-sm text-gray-500 font-medium">Sélectionnez les heures de prise.</p>
+
+            <div id="timeInputsContainer" class="space-y-3">
+                <!-- Will be populated by JS -->
+            </div>
+            <button type="button" onclick="addTimeInput()"
+                class="text-emerald-600 font-bold text-sm bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-100">+
+                Ajouter une heure</button>
+        </div>
+
+        <!-- Step 4: Durée -->
+        <div id="step-4" class="step-content space-y-5 hidden">
+            <h3 class="text-xl font-black text-gray-800">4. Pendant combien de temps ?</h3>
+            <input type="hidden" name="durationType" id="durationType" value="DAYS">
+
+            <div class="flex gap-2 p-1 bg-gray-100 rounded-2xl mb-4">
+                <button type="button" onclick="setDurationType('DAYS')" id="btn-dur-days"
+                    class="flex-1 py-3 rounded-xl font-bold text-sm transition-all bg-white shadow-sm text-emerald-700">Nombre
+                    de jours</button>
+                <button type="button" onclick="setDurationType('DATE')" id="btn-dur-date"
+                    class="flex-1 py-3 rounded-xl font-bold text-sm text-gray-400 transition-all hover:text-gray-600">Jusqu'à
+                    une date</button>
+            </div>
+
+            <div id="duration-days-input">
+                <label class="block text-sm font-bold text-gray-400 uppercase mb-2 ml-2">Jours de traitement</label>
+                <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-[1.5rem] border-2 border-gray-100">
+                    <button type="button" onclick="adjustDays(-1)"
+                        class="w-12 h-12 bg-white rounded-xl shadow-sm font-black text-2xl text-emerald-600 active:scale-90 transition-transform">-</button>
+                    <input type="number" name="durationDays" id="durationDays" value="7"
+                        class="flex-1 bg-transparent text-center font-black text-3xl outline-none text-gray-800">
+                    <button type="button" onclick="adjustDays(1)"
+                        class="w-12 h-12 bg-white rounded-xl shadow-sm font-black text-2xl text-emerald-600 active:scale-90 transition-transform">+</button>
+                </div>
+            </div>
+
+            <div id="duration-date-input" class="hidden">
+                <label class="block text-sm font-bold text-gray-400 uppercase mb-2 ml-2">Date de fin</label>
+                <input type="date" name="endDate"
+                    class="w-full p-5 bg-gray-50 border-2 border-gray-100 rounded-[1.5rem] focus:border-emerald-500 outline-none font-bold text-lg">
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex gap-3 mt-8 pt-4 border-t border-gray-100">
+            <button type="button" id="prevBtn" onclick="prevStep()"
+                class="hidden px-6 py-4 bg-gray-100 text-gray-600 rounded-2xl font-bold active:scale-95 transition-all">Retour</button>
+            <button type="button" id="nextBtn" onclick="nextStep()"
+                class="flex-1 px-6 py-4 bg-emerald-600 text-white rounded-2xl font-black text-lg shadow-lg shadow-emerald-200 active:scale-95 transition-all">Continuer</button>
+            <button type="submit" id="submitBtn"
+                class="hidden flex-1 px-6 py-4 bg-emerald-600 text-white rounded-2xl font-black text-lg shadow-lg shadow-emerald-200 active:scale-95 transition-all">Terminer</button>
+        </div>
+    </form>
+</section>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 4;
+    let frequencyType = '';
+
+    function updateUI() {
+        // Steps visibility
+        document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+        document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+
+        // Buttons
+        document.getElementById('prevBtn').classList.toggle('hidden', currentStep === 1);
+
+        if (currentStep === totalSteps) {
+            document.getElementById('nextBtn').classList.add('hidden');
+            document.getElementById('submitBtn').classList.remove('hidden');
+        } else {
+            document.getElementById('nextBtn').classList.remove('hidden');
+            document.getElementById('submitBtn').classList.add('hidden');
+        }
+
+        // Progress Bar
+        for (let i = 1; i <= totalSteps; i++) {
+            const bar = document.getElementById(`step-bar-${i}`);
+            if (i <= currentStep) {
+                bar.classList.remove('bg-gray-200');
+                bar.classList.add('bg-emerald-500');
+            } else {
+                bar.classList.add('bg-gray-200');
+                bar.classList.remove('bg-emerald-500');
+            }
+        }
+    }
+
+    function nextStep() {
+        if (!validateStep(currentStep)) return;
+        if (currentStep < totalSteps) {
+            currentStep++;
+            updateUI();
+        }
+    }
+
+    function prevStep() {
+        if (currentStep > 1) {
+            currentStep--;
+            updateUI();
+        }
+    }
+
+    function validateStep(step) {
+        if (step === 1) {
+            const name = document.querySelector('input[name="name"]').value;
+            const dosage = document.querySelector('input[name="dosage"]').value;
+            if (!name || !dosage) {
+                alert("Veuillez remplir les champs.");
+                return false;
+            }
+        }
+        if (step === 2) {
+            if (!document.getElementById('frequencyType').value) {
+                alert("Veuillez choisir une fréquence.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Frequency Logic
+    function selectFrequency(type) {
+        frequencyType = type;
+        document.getElementById('frequencyType').value = type;
+
+        // Visual selection
+        document.querySelectorAll('.freq-btn').forEach(btn => {
+            btn.classList.remove('ring-4', 'ring-emerald-200', 'bg-emerald-50', 'border-emerald-500');
+            btn.classList.add('bg-gray-50', 'border-gray-100');
+        });
+
+        const selectedBtn = event.currentTarget;
+        selectedBtn.classList.remove('bg-gray-50', 'border-gray-100');
+        selectedBtn.classList.add('bg-emerald-50', 'border-emerald-500', 'ring-4', 'ring-emerald-200');
+
+        document.getElementById('customFreqInput').classList.add('hidden');
+        generateTimeInputs(type);
+    }
+
+    function toggleCustomFreq() {
+        selectFrequency('EVERY_DAYS');
+        document.getElementById('customFreqInput').classList.remove('hidden');
+    }
+
+    function generateTimeInputs(type) {
+        const container = document.getElementById('timeInputsContainer');
+        container.innerHTML = '';
+        let count = 1;
+
+        if (type === 'DAILY_1') count = 1;
+        else if (type === 'DAILY_2') count = 2;
+        else if (type === 'DAILY_3') count = 3;
+        else count = 1; // Default
+
+        const defaults = ['08:00', '12:00', '20:00'];
+
+        for (let i = 0; i < count; i++) {
+            const div = document.createElement('div');
+            div.className = 'flex items-center gap-3 bg-gray-50 p-3 rounded-2xl border border-gray-100';
+            div.innerHTML = `
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center font-bold text-gray-400">#${i + 1}</div>
+                <input type="time" name="intakeTimes" value="${defaults[i] || '08:00'}" 
+                    class="flex-1 bg-transparent font-black text-xl text-gray-800 outline-none">
+             `;
+            container.appendChild(div);
+        }
+    }
+
+    function addTimeInput() {
+        const container = document.getElementById('timeInputsContainer');
+        const count = container.children.length;
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-3 bg-gray-50 p-3 rounded-2xl border border-gray-100';
+        div.innerHTML = `
+            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center font-bold text-gray-400">#${count + 1}</div>
+            <input type="time" name="intakeTimes" value="08:00" 
+                class="flex-1 bg-transparent font-black text-xl text-gray-800 outline-none">
+            <button type="button" onclick="this.parentElement.remove()" class="text-red-400">x</button>
+         `;
+        container.appendChild(div);
+    }
+
+    // Duration Logic
+    function setDurationType(type) {
+        document.getElementById('durationType').value = type;
+        if (type === 'DAYS') {
+            document.getElementById('duration-days-input').classList.remove('hidden');
+            document.getElementById('duration-date-input').classList.add('hidden');
+            document.getElementById('btn-dur-days').classList.add('bg-white', 'shadow-sm', 'text-emerald-700');
+            document.getElementById('btn-dur-days').classList.remove('text-gray-400');
+            document.getElementById('btn-dur-date').classList.remove('bg-white', 'shadow-sm', 'text-emerald-700');
+            document.getElementById('btn-dur-date').classList.add('text-gray-400');
+        } else {
+            document.getElementById('duration-days-input').classList.add('hidden');
+            document.getElementById('duration-date-input').classList.remove('hidden');
+            document.getElementById('btn-dur-date').classList.add('bg-white', 'shadow-sm', 'text-emerald-700');
+            document.getElementById('btn-dur-date').classList.remove('text-gray-400');
+            document.getElementById('btn-dur-days').classList.remove('bg-white', 'shadow-sm', 'text-emerald-700');
+            document.getElementById('btn-dur-days').classList.add('text-gray-400');
+        }
+    }
+
+    function adjustDays(amount) {
+        const input = document.getElementById('durationDays');
+        let val = parseInt(input.value) + amount;
+        if (val < 1) val = 1;
+        input.value = val;
+    }
+
+    // Init
+    generateTimeInputs('DAILY_1');
+</script>
+
+</html>

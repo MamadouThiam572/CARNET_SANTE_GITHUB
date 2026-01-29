@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainContainer" xmlns="http://javafx.com/javafx/17" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.senegalsante.controller.javafx.DashboardController"
+            styleClass="main-container">
+    
+    <left>
+        <VBox styleClass="sidebar" spacing="10">
+            <VBox alignment="CENTER" spacing="10">
+                <padding><Insets bottom="40"/></padding>
+                <Label text="🏥" style="-fx-font-size: 40px;"/>
+                <Label text="SÉNÉGAL SANTÉ" style="-fx-text-fill: white; -fx-font-weight: 800; -fx-font-size: 18px;"/>
+            </VBox>
+            
+            <Button text="🏠  Tableau de Bord" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleDashboard"/>
+            <Button text="💊  Médicaments" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleMedications"/>
+            <Button text="📅  Rendez-vous" styleClass="sidebar-item, sidebar-item-active" maxWidth="Infinity" alignment="CENTER_LEFT" />
+            <Button text="❤️  Suivi Santé" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleHealthTracking" />
+            <Button text="👨‍👩‍👧  Ma Famille" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleFamily" />
+            <Button text="📋  Ordonnances" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handlePrescriptions" />
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button fx:id="logoutButton" text="🚪  Déconnexion" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleLogout" style="-fx-text-fill: #ef4444;"/>
+        </VBox>
+    </left>
+    
+    <center>
+        <VBox styleClass="content-area" spacing="30">
+            <Label text="Mes Rendez-vous" styleClass="label-title"/>
+            <Label text="Ne manquez aucun rendez-vous avec vos spécialistes." styleClass="label-subtitle"/>
+            
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <Button text="+ Nouveau rendez-vous" styleClass="btn-primary" onAction="#handleAddAppointment" />
+                <Region HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="aptSearchField" promptText="Rechercher un rendez-vous..." style="-fx-pref-width: 300;" onKeyReleased="#handleAptSearch" />
+                <DatePicker fx:id="filterDatePicker" promptText="Filtrer par date" />
+            </HBox>
+            
+            <VBox spacing="20" VBox.vgrow="ALWAYS">
+                <Label text="Agenda Médical" styleClass="section-title"/>
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                    <VBox fx:id="appointmentsContainer" spacing="25">
+                        <!-- Les groupes de rendez-vous seront chargés ici (Aujourd'hui, Cette semaine, etc.) -->
+                    </VBox>
+                </ScrollPane>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<VBox spacing="20" styleClass="dialog-container" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.senegalsante.controller.javafx.DashboardController">
+    
+    <padding>
+        <Insets bottom="30" left="35" right="35" top="30" />
+    </padding>
+
+    <VBox spacing="5">
+        <Label text="Prendre un rendez-vous" style="-fx-font-size: 24; -fx-font-weight: 800; -fx-text-fill: #0f172a;"/>
+        <Label text="Remplissez les détails pour planifier votre consultation." style="-fx-text-fill: #64748b;"/>
+    </VBox>
+
+    <Separator />
+
+    <GridPane hgap="20" vgap="15">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="50" />
+            <ColumnConstraints percentWidth="50" />
+        </columnConstraints>
+
+        <!-- Pour qui ? -->
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2">
+            <Label text="Concerne qui ?" style="-fx-font-weight: 700;"/>
+            <ComboBox fx:id="aptMemberCombo" promptText="Sélectionner le membre de la famille" maxWidth="Infinity" />
+        </VBox>
+
+        <!-- Type de rendez-vous -->
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label text="Type de rendez-vous" style="-fx-font-weight: 700;"/>
+            <ComboBox fx:id="aptTypeCombo" promptText="Choisir le type" maxWidth="Infinity" />
+        </VBox>
+
+        <!-- Date -->
+        <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label text="Date" style="-fx-font-weight: 700;"/>
+            <DatePicker fx:id="aptDatePicker" maxWidth="Infinity" promptText="Choisir une date" />
+        </VBox>
+
+        <!-- Médecin -->
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="2">
+            <Label text="Nom du Médecin" style="-fx-font-weight: 700;"/>
+            <TextField fx:id="aptDoctorField" promptText="Ex: Dr. Ngom" />
+        </VBox>
+
+        <!-- Spécialité -->
+        <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label text="Spécialité" style="-fx-font-weight: 700;"/>
+            <TextField fx:id="aptSpecialtyField" promptText="Ex: Cardiologue" />
+        </VBox>
+
+        <!-- Heure -->
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="3">
+            <Label text="Heure" style="-fx-font-weight: 700;"/>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ComboBox fx:id="aptHourCombo" prefWidth="80" />
+                <Label text=":" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="aptMinuteCombo" prefWidth="80" />
+            </HBox>
+        </VBox>
+
+        <!-- Lieu -->
+        <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label text="Lieu" style="-fx-font-weight: 700;"/>
+            <TextField fx:id="aptLocationField" promptText="Hôpital, clinique..." />
+        </VBox>
+
+        <!-- Remarques -->
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2">
+            <Label text="Remarques (Optionnel)" style="-fx-font-weight: 700;"/>
+            <TextArea fx:id="aptNotesArea" prefHeight="80" promptText="Apporter les résultats, être à jeun..." wrapText="true" />
+        </VBox>
+    </GridPane>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <padding><Insets top="10"/></padding>
+        <Button text="Annuler" onAction="#handleCancelDialog" styleClass="btn-outline" />
+        <Button text="Enregistrer le rendez-vous" onAction="#handleSaveAppointment" styleClass="btn-primary" />
+    </HBox>
+
+</VBox>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainContainer" xmlns="http://javafx.com/javafx/17" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.senegalsante.controller.javafx.DashboardController"
+            styleClass="main-container">
+    
+    <!-- SIDEBAR (Re-used for consistency) -->
+    <left>
+        <VBox styleClass="sidebar" spacing="10">
+            <VBox alignment="CENTER" spacing="10">
+                <padding><Insets bottom="40"/></padding>
+                <Label text="🏥" style="-fx-font-size: 40px;"/>
+                <Label text="SÉNÉGAL SANTÉ" style="-fx-text-fill: white; -fx-font-weight: 800; -fx-font-size: 18px;"/>
+            </VBox>
+            
+            <Button text="🏠  Tableau de Bord" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleDashboard"/>
+            <Button text="💊  Médicaments" styleClass="sidebar-item, sidebar-item-active" maxWidth="Infinity" alignment="CENTER_LEFT" />
+            <Button text="📅  Rendez-vous" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleAppointments" />
+            <Button text="❤️  Suivi Santé" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleHealthTracking" />
+            <Button text="👨‍👩‍👧  Ma Famille" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleFamily" />
+            <Button text="📋  Ordonnances" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handlePrescriptions" />
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button fx:id="logoutButton" text="🚪  Déconnexion" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleLogout" style="-fx-text-fill: #ef4444;"/>
+        </VBox>
+    </left>
+    
+    <center>
+        <VBox styleClass="content-area" spacing="30">
+            <Label text="Mes Médicaments" styleClass="label-title"/>
+            <Label text="Gérez vos traitements et l'observance de vos prises." styleClass="label-subtitle"/>
+            
+            <HBox spacing="15">
+                <Button text="+ Ajouter un médicament" styleClass="btn-primary" onAction="#handleAddMedication" />
+                <Region HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="medSearchField" promptText="Rechercher un médicament..." style="-fx-pref-width: 300;" onKeyReleased="#handleMedSearch" onAction="#handleMedSearch" />
+            </HBox>
+            
+            <VBox styleClass="card" VBox.vgrow="ALWAYS">
+                <Label text="Traitements en cours" styleClass="section-title"/>
+                <TableView fx:id="medicationTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+                    <columns>
+                        <TableColumn fx:id="medNameCol" text="Nom" prefWidth="200"/>
+                        <TableColumn fx:id="medDosageCol" text="Dosage" prefWidth="150"/>
+                        <TableColumn fx:id="medFreqCol" text="Fréquence" prefWidth="150"/>
+                        <TableColumn fx:id="medNextCol" text="Prochaine prise" prefWidth="150"/>
+                        <TableColumn fx:id="medStatusCol" text="Statut" prefWidth="150"/>
+                        <TableColumn fx:id="medActionCol" text="Actions" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

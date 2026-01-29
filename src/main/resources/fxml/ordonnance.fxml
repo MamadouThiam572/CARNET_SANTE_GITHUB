@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="mainContainer" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.senegalsante.controller.javafx.OrdonnanceController"
+      styleClass="main-container">
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox styleClass="sidebar" spacing="10">
+            <VBox alignment="CENTER" spacing="10">
+                <padding><Insets bottom="40"/></padding>
+                <Label text="🏥" style="-fx-font-size: 40px;"/>
+                <Label text="SÉNÉGAL SANTÉ" style="-fx-text-fill: white; -fx-font-weight: 800; -fx-font-size: 18px;"/>
+            </VBox>
+            
+            <Button text="🏠  Tableau de Bord" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleDashboard"/>
+            <Button text="💊  Médicaments" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleMedications"/>
+            <Button text="📅  Rendez-vous" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleAppointments"/>
+            <Button text="❤️  Suivi Santé" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleHealthTracking"/>
+            <Button text="👨‍👩‍👧  Ma Famille" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleFamily"/>
+            <Button text="📋  Ordonnances" styleClass="sidebar-item, sidebar-item-active" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handlePrescriptions"/>
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="👤  Paramètres" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleProfile"/>
+            <Button text="🚪  Déconnexion" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleLogout" style="-fx-text-fill: #ef4444;"/>
+        </VBox>
+    </left>
+
+    <!-- CONTENT -->
+    <center>
+        <VBox spacing="20" styleClass="content-area">
+
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- En-tête -->
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <VBox>
+                    <Label text="Mes Ordonnances" styleClass="page-title" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                    <Label text="Gérez vos prescriptions médicales et traitements" styleClass="label-subtitle" style="-fx-text-fill: #666;"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Nouvelle Ordonnance" onAction="#handleAjouterOrdonnance" styleClass="btn-primary" 
+                        style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-padding: 10 20; -fx-background-radius: 6; -fx-cursor: hand;"/>
+            </HBox>
+
+            <!-- Tableau des ordonnances -->
+            <TableView fx:id="ordonnanceTable" VBox.vgrow="ALWAYS" styleClass="modern-table">
+                <columns>
+                    <TableColumn fx:id="dateColumn" text="Date" prefWidth="120"/>
+                    <TableColumn fx:id="medecinColumn" text="Médecin" prefWidth="150"/>
+                    <TableColumn fx:id="specialiteColumn" text="Spécialité" prefWidth="150"/>
+                    <TableColumn fx:id="traitementColumn" text="Traitement (Aperçu)" prefWidth="250"/>
+                    <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150"/>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+                <placeholder>
+                    <VBox alignment="CENTER" spacing="10">
+                        <Label text="📋" style="-fx-font-size: 40px;"/>
+                        <Label text="Aucune ordonnance enregistrée" style="-fx-font-size: 16px; -fx-text-fill: #999;"/>
+                    </VBox>
+                </placeholder>
+            </TableView>
+
+        </VBox>
+    </center>
+</BorderPane>

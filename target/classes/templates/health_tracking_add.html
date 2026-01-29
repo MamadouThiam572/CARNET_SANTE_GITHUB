@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::section}, ~{::scripts})}" xmlns:th="http://www.thymeleaf.org">
+<section class="space-y-6">
+
+    <!-- Header -->
+    <div>
+        <h1 class="text-2xl font-black text-slate-800">Enregistrer l'État de Santé</h1>
+        <p class="text-sm text-slate-500 font-medium">Saisissez les informations du jour</p>
+    </div>
+
+    <!-- Form -->
+    <form method="post" th:action="@{/health-tracking/add}" class="space-y-5">
+
+        <!-- Profile Selection -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+            <label class="block text-xs font-black text-slate-600 uppercase tracking-wide mb-2">
+                Membre de la famille
+            </label>
+            <select name="profileId" required
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="">Sélectionner...</option>
+                <option th:each="p : ${profiles}" th:value="${p.id}" th:text="${p.firstName + ' ' + p.lastName}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Date -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+            <label class="block text-xs font-black text-slate-600 uppercase tracking-wide mb-2">
+                Date
+            </label>
+            <input type="date" name="recordDate" required
+                th:value="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+
+        <!-- Wellness Score -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+            <label class="block text-xs font-black text-slate-600 uppercase tracking-wide mb-2">
+                Bien-être général (1-10)
+            </label>
+            <div class="flex items-center gap-4">
+                <input type="range" name="wellnessScore" min="1" max="10" value="5" id="wellnessSlider"
+                    class="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600" />
+                <div
+                    class="flex items-center justify-center w-16 h-16 bg-emerald-50 rounded-xl border-2 border-emerald-200">
+                    <span id="wellnessValue" class="text-2xl font-black text-emerald-600">5</span>
+                </div>
+            </div>
+            <div class="flex justify-between mt-2 text-xs font-bold text-slate-400">
+                <span>😟 Très mal</span>
+                <span>😊 Très bien</span>
+            </div>
+        </div>
+
+        <!-- Vital Signs -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 space-y-4">
+            <h3 class="text-sm font-black text-slate-700 uppercase tracking-wide">Paramètres Vitaux (optionnel)</h3>
+
+            <!-- Temperature -->
+            <div>
+                <label class="block text-xs font-bold text-slate-600 mb-2">
+                    🌡️ Température (°C)
+                </label>
+                <input type="number" step="0.1" name="temperature" placeholder="37.0"
+                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+
+            <!-- Blood Pressure -->
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-2">
+                        💓 Tension systolique (mmHg)
+                    </label>
+                    <input type="number" name="systolicPressure" placeholder="120"
+                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-2">
+                        Tension diastolique (mmHg)
+                    </label>
+                    <input type="number" name="diastolicPressure" placeholder="80"
+                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+                </div>
+            </div>
+
+            <!-- Weight -->
+            <div>
+                <label class="block text-xs font-bold text-slate-600 mb-2">
+                    ⚖️ Poids (kg)
+                </label>
+                <input type="number" step="0.1" name="weight" placeholder="70.0"
+                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+            <label class="block text-xs font-black text-slate-600 uppercase tracking-wide mb-2">
+                Notes (optionnel)
+            </label>
+            <textarea name="notes" rows="4" placeholder="Symptômes, observations, remarques..."
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex gap-3">
+            <a th:href="@{/health-tracking}"
+                class="flex-1 px-6 py-4 bg-slate-100 text-slate-700 rounded-xl font-black text-center hover:bg-slate-200 active:scale-95 transition-all">
+                Annuler
+            </a>
+            <button type="submit"
+                class="flex-1 px-6 py-4 bg-emerald-600 text-white rounded-xl font-black shadow-lg shadow-emerald-200 hover:bg-emerald-700 active:scale-95 transition-all">
+                Enregistrer
+            </button>
+        </div>
+    </form>
+
+</section>
+
+<th:block th:fragment="scripts">
+    <script>
+        // Update wellness score display
+        const slider = document.getElementById('wellnessSlider');
+        const display = document.getElementById('wellnessValue');
+
+        slider.addEventListener('input', function () {
+            display.textContent = this.value;
+        });
+    </script>
+</th:block>
+
+</html>

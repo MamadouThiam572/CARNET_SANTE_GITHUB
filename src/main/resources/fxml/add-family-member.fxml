@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.senegalsante.controller.javafx.DashboardController"
+      spacing="20" prefWidth="450" styleClass="main-container" style="-fx-padding: 30;">
+    
+    <Label text="👨‍👩‍👧 Nouveau Membre" styleClass="label-title" style="-fx-font-size: 20px;"/>
+    
+    <GridPane hgap="15" vgap="15">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="120" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+        
+        <Label text="Prénom :" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="memberFirstNameField" promptText="ex: Aminata" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        
+        <Label text="Nom :" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <TextField fx:id="memberLastNameField" promptText="ex: Diallo" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        
+        <Label text="Lien de parenté :" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <ComboBox fx:id="memberRelationCombo" promptText="Choisir le lien" maxWidth="Infinity" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+        <Label text="Date de naissance :" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <DatePicker fx:id="memberBirthDatePicker" maxWidth="Infinity" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+        <Label text="Sexe (Facultatif) :" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+        <ComboBox fx:id="memberGenderCombo" promptText="Choisir le sexe" maxWidth="Infinity" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+    </GridPane>
+    
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#handleCancelDialog" styleClass="btn-secondary" />
+        <Button text="Enregistrer" onAction="#handleSaveFamilyMember" styleClass="btn-primary" />
+    </HBox>
+</VBox>

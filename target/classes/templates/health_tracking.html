@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::section}, null)}" xmlns:th="http://www.thymeleaf.org">
+<section class="space-y-6">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-black text-slate-800">Suivi de Santé</h1>
+            <p class="text-sm text-slate-500 font-medium">Historique des enregistrements</p>
+        </div>
+        <a th:href="@{/health-tracking/add}"
+            class="px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-emerald-200 hover:bg-emerald-700 active:scale-95 transition-all">
+            + Ajouter
+        </a>
+    </div>
+
+    <!-- Profile Selector -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+        <form method="get" class="flex gap-3">
+            <select name="profileId"
+                class="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option th:each="p : ${profiles}" th:value="${p.id}"
+                    th:selected="${selectedProfile != null && p.id == selectedProfile.id}"
+                    th:text="${p.firstName + ' ' + p.lastName}"></option>
+            </select>
+            <button type="submit"
+                class="px-6 py-3 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 active:scale-95 transition-all">
+                Filtrer
+            </button>
+        </form>
+    </div>
+
+    <!-- Records List -->
+    <div th:if="${records != null && !records.isEmpty()}" class="space-y-3">
+        <div th:each="record : ${records}"
+            class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+
+            <div class="flex items-start justify-between mb-3">
+                <div>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wide"
+                        th:text="${#temporals.format(record.recordDate, 'dd MMMM yyyy')}"></p>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-2xl font-black text-emerald-600" th:if="${record.wellnessScore != null}"
+                            th:text="${record.wellnessScore} + '/10'"></span>
+                        <span class="text-xs font-bold text-slate-400"
+                            th:if="${record.wellnessScore != null}">Bien-être</span>
+                    </div>
+                </div>
+
+                <!-- Wellness indicator -->
+                <div class="flex items-center gap-2">
+                    <div th:if="${record.wellnessScore != null}" class="px-3 py-1 rounded-full text-xs font-black"
+                        th:classappend="${record.wellnessScore >= 7 ? 'bg-emerald-100 text-emerald-700' : (record.wellnessScore >= 4 ? 'bg-orange-100 text-orange-700' : 'bg-red-100 text-red-700')}">
+                        <span th:if="${record.wellnessScore >= 7}">😊 Bien</span>
+                        <span th:if="${record.wellnessScore >= 4 && record.wellnessScore < 7}">😐 Moyen</span>
+                        <span th:if="${record.wellnessScore < 4}">😟 Faible</span>
+                    </div>
+                    <a th:href="@{'/health-tracking/delete/' + ${record.id}}"
+                        class="p-2 text-slate-300 hover:text-rose-500 transition-colors"
+                        onclick="return confirm('Supprimer cet enregistrement ?')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 6h18"></path>
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Vital Signs -->
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div th:if="${record.temperature != null}" class="bg-blue-50 rounded-xl p-3">
+                    <p class="text-xs font-bold text-blue-600 uppercase tracking-wide">Température</p>
+                    <p class="text-lg font-black text-blue-700" th:text="${record.temperature} + ' °C'"></p>
+                </div>
+
+                <div th:if="${record.systolicPressure != null && record.diastolicPressure != null}"
+                    class="bg-purple-50 rounded-xl p-3">
+                    <p class="text-xs font-bold text-purple-600 uppercase tracking-wide">Tension</p>
+                    <p class="text-lg font-black text-purple-700"
+                        th:text="${record.systolicPressure} + '/' + ${record.diastolicPressure}"></p>
+                </div>
+
+                <div th:if="${record.weight != null}" class="bg-orange-50 rounded-xl p-3">
+                    <p class="text-xs font-bold text-orange-600 uppercase tracking-wide">Poids</p>
+                    <p class="text-lg font-black text-orange-700" th:text="${record.weight} + ' kg'"></p>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div th:if="${record.notes != null && !record.notes.isEmpty()}" class="bg-slate-50 rounded-xl p-3">
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">Notes</p>
+                <p class="text-sm text-slate-700" th:text="${record.notes}"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div th:if="${records == null || records.isEmpty()}"
+        class="bg-white rounded-2xl p-12 text-center shadow-sm border border-slate-100">
+        <div class="text-6xl mb-4">📊</div>
+        <h3 class="text-lg font-black text-slate-700 mb-2">Aucun enregistrement</h3>
+        <p class="text-sm text-slate-500 mb-6">Commencez à suivre votre état de santé</p>
+        <a th:href="@{/health-tracking/add}"
+            class="inline-block px-6 py-3 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 active:scale-95 transition-all">
+            Ajouter un enregistrement
+        </a>
+    </div>
+
+    <!-- Quick Link to Analytics -->
+    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 text-white shadow-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <h3 class="text-lg font-black mb-1">Voir les analyses</h3>
+                <p class="text-sm text-emerald-50">Graphiques et tendances détaillées</p>
+            </div>
+            <a th:href="@{/health-analytics(profileId=${selectedProfile != null ? selectedProfile.id : null})}"
+                class="px-6 py-3 bg-white text-emerald-600 rounded-xl font-black hover:bg-emerald-50 active:scale-95 transition-all">
+                Analyses →
+            </a>
+        </div>
+    </div>
+
+</section>
+
+</html>

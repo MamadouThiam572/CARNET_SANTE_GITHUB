@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+
+<BorderPane fx:id="mainContainer" xmlns="http://javafx.com/javafx/17" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.senegalsante.controller.javafx.DashboardController"
+            styleClass="main-container">
+    
+    <left>
+        <VBox styleClass="sidebar" spacing="10">
+            <VBox alignment="CENTER" spacing="10">
+                <padding><Insets bottom="40"/></padding>
+                <Label text="🏥" style="-fx-font-size: 40px;"/>
+                <Label text="SÉNÉGAL SANTÉ" style="-fx-text-fill: white; -fx-font-weight: 800; -fx-font-size: 18px;"/>
+            </VBox>
+            
+            <Button text="🏠  Tableau de Bord" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleDashboard"/>
+            <Button text="💊  Médicaments" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleMedications"/>
+            <Button text="📅  Rendez-vous" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleAppointments" />
+            <Button text="❤️  Suivi Santé" styleClass="sidebar-item, sidebar-item-active" maxWidth="Infinity" alignment="CENTER_LEFT" />
+            <Button text="👨‍👩‍👧  Ma Famille" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleFamily" />
+            <Button text="📋  Ordonnances" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handlePrescriptions" />
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button fx:id="logoutButton" text="🚪  Déconnexion" styleClass="sidebar-item" maxWidth="Infinity" alignment="CENTER_LEFT" onAction="#handleLogout" style="-fx-text-fill: #ef4444;"/>
+        </VBox>
+    </left>
+    
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="content-area-scroll">
+            <VBox styleClass="content-area" spacing="30">
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="VOTRE SUIVI SANTÉ" styleClass="label-title"/>
+                        <Label text="Analysez vos progrès et surveillez vos indicateurs clés." styleClass="label-subtitle"/>
+                    </VBox>
+                    <Button text="+ Nouvel enregistrement" styleClass="btn-primary" onAction="#handleAddHealthRecord" style="-fx-font-size: 14px; -fx-padding: 10 20;" />
+                </HBox>
+
+                <!-- Filtres rapides -->
+                <HBox spacing="15" alignment="CENTER_LEFT" styleClass="card-mini" style="-fx-padding: 15;">
+                    <Label text="Filtrer par :" style="-fx-font-weight: bold;"/>
+                    <ComboBox fx:id="filterRecordTypeCombo" promptText="Tous les types" onAction="#handleFilterRecords" />
+                    <ComboBox fx:id="filterMemberCombo" promptText="Toute la famille" onAction="#handleFilterRecords" />
+                    <DatePicker fx:id="filterRecordDatePicker" promptText="Depuis le..." onAction="#handleFilterRecords" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button text="Réinitialiser" styleClass="btn-outline" onAction="#handleResetHealthFilters" />
+                </HBox>
+                
+                <!-- Graphiques d'évolution -->
+                <HBox spacing="20">
+                    <VBox styleClass="card" HBox.hgrow="ALWAYS">
+                        <Label text="Évolution du Bien-être (%)" styleClass="section-title"/>
+                        <LineChart fx:id="wellnessChart" minHeight="300" legendVisible="false">
+                            <xAxis><CategoryAxis side="BOTTOM"/></xAxis>
+                            <yAxis><NumberAxis side="LEFT" lowerBound="0" upperBound="100"/></yAxis>
+                        </LineChart>
+                    </VBox>
+                    <VBox styleClass="card" HBox.hgrow="ALWAYS">
+                        <Label text="Intensité des Douleurs / Symptômes" styleClass="section-title"/>
+                        <LineChart fx:id="painChart" minHeight="300" legendVisible="false">
+                            <xAxis><CategoryAxis side="BOTTOM"/></xAxis>
+                            <yAxis><NumberAxis side="LEFT" lowerBound="0" upperBound="10" tickUnit="1" minorTickCount="0"/></yAxis>
+                        </LineChart>
+                    </VBox>
+                </HBox>
+
+                <!-- Historique Chronologique -->
+                <VBox spacing="20">
+                    <Label text="Historique Chronologique" styleClass="section-title"/>
+                    <VBox fx:id="healthHistoryContainer" spacing="15">
+                        <!-- Chargé dynamiquement sous forme de cartes -->
+                    </VBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
