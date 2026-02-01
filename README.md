@@ -1,135 +1,222 @@
-# Carnet de Santé Électronique (HEALTHSen)
+# 🩺 Carnet de Santé Électronique (HEALTHSen)
 
-**Application de bureau native et 100% hors ligne pour la gestion de la santé personnelle et familiale.**
+**Application de bureau native, sécurisée et 100 % hors ligne pour la gestion de la santé personnelle et familiale.**
 
-## Table des matières
-1.  [Introduction](#1-introduction)
-2.  [Fonctionnalités Clés](#2-fonctionnalités-clés)
-3.  [Architecture : Frontend vs. Backend](#3-architecture--frontend-vs-backend)
-    *   [Le Frontend (JavaFX) : L'Interface Utilisateur](#le-frontend-javafx--linterface-utilisateur)
-    *   [Le Backend (Spring Boot) : Le Moteur de l'Application](#le-backend-spring-boot--le-moteur-de-lapplication)
-    *   [Communication Frontend-Backend](#communication-frontend-backend--linjection-de-dépendances)
-    *   [Exemple Concret : Le Cycle de Connexion](#exemple-concret--le-cycle-de-connexion)
-4.  [Technologies Utilisées](#4-technologies-utilisées)
-5.  [Démarrage Rapide](#5-démarrage-rapide)
-    *   [Pré-requis](#pré-requis)
-    *   [Installation](#installation)
-    *   [Lancer l'Application](#lancer-lapplication)
-    *   [Générer l'Exécutable](#générer-lexécutable)
-6.  [Gestion de la Base de Données](#6-gestion-de-la-base-de-données)
-7.  [Contribution](#7-contribution)
-8.  [Licence](#8-licence)
+---
+
+## 📑 Table des matières
+
+1. [Introduction](#1-introduction)
+2. [Fonctionnalités clés](#2-fonctionnalités-clés)
+3. [Architecture : Frontend vs Backend](#3-architecture--frontend-vs-backend)
+
+   * [Le Frontend (JavaFX) : l’interface utilisateur](#le-frontend-javafx--linterface-utilisateur)
+   * [Le Backend (Spring Boot) : le moteur de l’application](#le-backend-spring-boot--le-moteur-de-lapplication)
+   * [Communication Frontend–Backend](#communication-frontend-backend--linjection-de-dépendances)
+   * [Exemple concret : cycle de connexion](#exemple-concret--le-cycle-de-connexion)
+4. [Technologies utilisées](#4-technologies-utilisées)
+5. [Démarrage rapide](#5-démarrage-rapide)
+
+   * [Pré-requis](#pré-requis)
+   * [Installation](#installation)
+   * [Lancer l’application](#lancer-lapplication)
+   * [Générer l’exécutable](#générer-lexécutable)
+6. [Gestion de la base de données](#6-gestion-de-la-base-de-données)
+7. [Contribution](#7-contribution)
+8. [Licence](#8-licence)
 
 ---
 
 ## 1. Introduction
 
-**HEALTHSen** est une solution logicielle innovante conçue pour offrir une gestion privée et sécurisée de vos informations de santé. Développée en **Java** avec **JavaFX** pour l'interface utilisateur et **Spring Boot** pour la logique backend, cette application de bureau fonctionne entièrement **hors ligne**, garantissant la confidentialité et l'accessibilité de vos données médicales à tout moment.
+**HEALTHSen** est une solution logicielle moderne conçue pour offrir une **gestion privée, sécurisée et centralisée** des informations de santé.
 
-Son objectif est de simplifier le suivi médical pour les individus et les familles en regroupant toutes les données essentielles : rendez-vous, ordonnances, dossiers de santé et plus encore.
+Développée en **Java**, avec **JavaFX** pour l’interface graphique et **Spring Boot** pour la logique métier, l’application fonctionne **entièrement hors ligne**, garantissant :
 
-## 2. Fonctionnalités Clés
+* 🔒 la confidentialité des données médicales,
+* ⚡ une disponibilité permanente,
+* 🖥️ une utilisation fluide sur poste de travail.
 
-*   **Gestion Complète des Utilisateurs et Profils :** Créez un compte principal et ajoutez des profils pour chaque membre de votre famille.
-*   **Tableau de Bord Intuitif :** Visualisez rapidement les informations cruciales, y compris les prochains rendez-vous et les dernières ordonnances.
-*   **Gestion Numérique des Ordonnances :** Enregistrez vos ordonnances et joignez des photos ou scans des documents originaux.
-*   **Suivi Détaillé des Médicaments :** Maintenez une liste à jour de vos médicaments et enregistrez les prises.
-*   **Dossiers de Santé Personnalisés :** Consignez les consultations médicales, les symptômes ressentis et les signes vitaux.
-*   **Planification de Rendez-vous :** Organisez et suivez vos rendez-vous médicaux.
-*   **Exportation au Format PDF :** Générez des rapports PDF de vos informations de santé pour impression ou partage.
+L’objectif principal est de **simplifier le suivi médical individuel et familial** en regroupant au même endroit toutes les informations essentielles : dossiers médicaux, ordonnances, médicaments et rendez-vous.
 
-## 3. Architecture : Frontend vs. Backend
+---
 
-Même pour une application de bureau, il est utile de penser en termes de **Frontend** (ce que l'utilisateur voit) et de **Backend** (ce qui se passe en arrière-plan). Cette séparation des préoccupations rend le code plus propre, plus facile à maintenir et à faire évoluer.
+## 2. Fonctionnalités clés
 
-### Le Frontend (JavaFX) : L'Interface Utilisateur
+* 👤 **Gestion des utilisateurs et profils**
+  Création d’un compte principal avec gestion de plusieurs profils (famille).
 
-Le Frontend, c'est l'ensemble de l'interface graphique avec laquelle l'utilisateur interagit.
+* 📊 **Tableau de bord intuitif**
+  Vue synthétique des informations importantes : prochains rendez-vous, ordonnances récentes, traitements en cours.
 
-*   **Technologie principale :** **JavaFX**.
-*   **Rôle :** Affiche les fenêtres, les boutons, les formulaires et toutes les informations visibles à l'écran.
-*   **Composants clés :**
-    1.  **Vues (`.fxml`) :** Situés dans `src/main/resources/fxml/`, ces fichiers décrivent la structure et la disposition de chaque écran (ex: `login.fxml`, `dashboard.fxml`). C'est le "squelette" de l'interface.
-    2.  **Contrôleurs (`Controller`) :** Situés dans `src/main/java/com/senegalsante/controller/javafx/`, ces classes Java font le lien entre les vues et le reste de l'application. Elles gèrent les actions de l'utilisateur (clics, saisie) et mettent à jour l'affichage.
+* 💊 **Gestion numérique des ordonnances**
+  Enregistrement des ordonnances avec possibilité d’ajouter des images ou des scans.
 
-### Le Backend (Spring Boot) : Le Moteur de l'Application
+* 🧾 **Suivi des médicaments**
+  Liste détaillée des médicaments avec historique des prises.
 
-Le Backend est le moteur invisible qui contient toute la logique de l'application, gère les données et les règles métier. Il est entièrement orchestré par **Spring Boot**.
+* 🩻 **Dossiers de santé personnalisés**
+  Historique des consultations, symptômes, diagnostics et signes vitaux.
 
-*   **Technologie principale :** **Spring Boot**.
-*   **Rôle :** Exécuter les opérations, traiter les données et communiquer avec la base de données.
-*   **Composants clés (Architecture en couches) :**
-    1.  **Services (`@Service`) :** Le cœur de la logique métier. Ces classes (dans `src/main/java/com/senegalsante/service/`) définissent les opérations complexes (ex: comment inscrire un utilisateur, comment créer une ordonnance).
-    2.  **Repositories (`JpaRepository`) :** La couche d'accès aux données. Ces interfaces (dans `src/main/java/com/senegalsante/repository/`) utilisent **Spring Data JPA** pour communiquer avec la base de données de manière simple et efficace, sans avoir à écrire de requêtes SQL manuellement.
-    3.  **Modèles (`@Entity`) :** La définition de la structure des données. Ces classes (dans `src/main/java/com/senegalsante/model/`) sont le plan de la base de données **SQLite**. Chaque classe correspond à une table.
+* 📅 **Planification des rendez-vous médicaux**
+  Organisation et suivi des consultations.
 
-### Communication Frontend-Backend : L'Injection de Dépendances
+* 📄 **Exportation PDF**
+  Génération de rapports médicaux imprimables ou partageables.
 
-La communication entre le Frontend (Contrôleurs JavaFX) et le Backend (Services) est assurée par le mécanisme d'**injection de dépendances** de Spring.
+---
 
-1.  Un Contrôleur JavaFX est déclaré comme un composant Spring (`@Component`).
-2.  Il peut alors demander une instance d'un Service ou d'un Repository du Backend en utilisant l'annotation `@Autowired`.
-3.  Spring "injecte" automatiquement l'instance requise dans le contrôleur.
-4.  Le contrôleur peut ainsi appeler les méthodes du backend directement, comme si c'était un composant local.
+## 3. Architecture : Frontend vs Backend
 
-Ce mécanisme permet une **faible-couplage** : le frontend n'a pas besoin de savoir comment le backend est construit, il a juste besoin de savoir quelles méthodes appeler.
+Même pour une application de bureau, l’architecture repose sur une **séparation claire des responsabilités** :
 
-### Exemple Concret : Le Cycle de Connexion
+* **Frontend** : interface utilisateur (IHM)
+* **Backend** : logique métier et gestion des données
 
-1.  **Frontend (Vue `login.fxml`) :** L'utilisateur clique sur "Se connecter".
-2.  **Frontend (Contrôleur `LoginController`) :** La méthode `@FXML` `handleLogin()` est déclenchée.
-3.  **Pont Frontend-Backend :** Le contrôleur utilise son `UserRepository` (injecté via `@Autowired`) pour appeler la méthode `findByEmail(...)`.
-4.  **Backend (Repository `UserRepository`) :** Spring Data JPA traduit l'appel en requête SQL, l'exécute sur la base de données SQLite et retourne un objet `User`.
-5.  **Retour au Frontend :** Le `LoginController` reçoit l'objet `User`, vérifie le mot de passe, et si tout est correct, charge la vue `dashboard.fxml` pour l'afficher à l'utilisateur.
+Cette approche améliore la **maintenabilité**, la **lisibilité du code** et l’**évolutivité** du projet.
 
-## 4. Technologies Utilisées
+---
 
-*   **Langage :** Java 17
-*   **Framework d'Application (Backend) :** Spring Boot 3.2.0
-*   **Interface Utilisateur (Frontend) :** OpenJFX (JavaFX) 21.0.1
-*   **Accès aux Données :** Spring Data JPA & Hibernate
-*   **Base de Données :** SQLite
-*   **Outil de Build :** Apache Maven
+### Le Frontend (JavaFX) : l’interface utilisateur
 
-## 5. Démarrage Rapide
+Le Frontend correspond à tout ce que l’utilisateur voit et manipule.
+
+* **Technologie** : JavaFX
+* **Rôle** : affichage des écrans, gestion des interactions utilisateur
+
+#### Composants principaux
+
+1. **Vues (`.fxml`)**
+
+   * Localisation : `src/main/resources/fxml/`
+   * Rôle : définir la structure graphique des écrans (`login.fxml`, `dashboard.fxml`, etc.)
+
+2. **Contrôleurs JavaFX**
+
+   * Localisation : `src/main/java/com/senegalsante/controller/javafx/`
+   * Rôle :
+
+     * gérer les actions utilisateur (clics, saisies),
+     * appeler la logique métier,
+     * mettre à jour l’interface.
+
+---
+
+### Le Backend (Spring Boot) : le moteur de l’application
+
+Le Backend contient toute la **logique métier** et la **gestion des données**, orchestrées par Spring Boot.
+
+* **Technologie** : Spring Boot
+* **Rôle** : traitement des données, règles métier, persistance
+
+#### Architecture en couches
+
+1. **Services (`@Service`)**
+
+   * Localisation : `src/main/java/com/senegalsante/service/`
+   * Contiennent la logique métier principale (inscription, création d’ordonnance, etc.).
+
+2. **Repositories (`JpaRepository`)**
+
+   * Localisation : `src/main/java/com/senegalsante/repository/`
+   * Assurent l’accès à la base de données via Spring Data JPA, sans SQL explicite.
+
+3. **Modèles (`@Entity`)**
+
+   * Localisation : `src/main/java/com/senegalsante/model/`
+   * Représentent les tables de la base SQLite.
+
+---
+
+### Communication Frontend–Backend : l’injection de dépendances
+
+La communication entre JavaFX et Spring Boot repose sur **l’injection de dépendances**.
+
+1. Les contrôleurs JavaFX sont déclarés comme composants Spring (`@Component`).
+2. Les services ou repositories sont injectés via `@Autowired`.
+3. Spring fournit automatiquement les instances nécessaires.
+
+👉 Résultat : **faible couplage** et meilleure testabilité.
+
+---
+
+### Exemple concret : cycle de connexion
+
+1. L’utilisateur clique sur **Se connecter** (vue `login.fxml`).
+2. La méthode `handleLogin()` du `LoginController` est déclenchée.
+3. Le contrôleur appelle `UserRepository.findByEmail(...)`.
+4. Spring Data JPA interroge la base SQLite.
+5. L’utilisateur est authentifié et le tableau de bord (`dashboard.fxml`) est affiché.
+
+---
+
+## 4. Technologies utilisées
+
+* **Langage** : Java 17
+* **Backend** : Spring Boot 3.2.0
+* **Frontend** : JavaFX (OpenJFX 21.0.1)
+* **ORM** : Hibernate / Spring Data JPA
+* **Base de données** : SQLite
+* **Build** : Apache Maven
+
+---
+
+## 5. Démarrage rapide
 
 ### Pré-requis
 
-*   **Java Development Kit (JDK) 17 ou supérieur**
-*   **Apache Maven 3.x ou supérieur**
+* JDK 17 ou supérieur
+* Apache Maven 3.x ou supérieur
 
 ### Installation
 
-1.  **Clonez le dépôt :** `git clone <URL_DU_DEPOT>` et `cd CARNET_SANTE_GITHUB`
-2.  **Construire le projet :** `mvn clean install` (télécharge les dépendances).
+```bash
+git clone <URL_DU_DEPOT>
+cd CARNET_SANTE_GITHUB
+mvn clean install
+```
 
-### Lancer l'Application
+### Lancer l’application
 
 ```bash
 mvn clean javafx:run
 ```
 
-### Générer l'Exécutable JAR
+### Générer l’exécutable JAR
 
-Pour créer un fichier `.jar` unique et autonome :
 ```bash
 mvn clean package
+java -jar target/carnet-sante-1.0.0.jar
 ```
-Lancez-le avec : `java -jar target/carnet-sante-1.0.0.jar`.
 
-## 6. Gestion de la Base de Données
+---
 
-L'application utilise **SQLite** pour un stockage 100% local. Le fichier `senegal_sante.db` est créé automatiquement à la racine du projet. Pour les développeurs, le paramètre `spring.jpa.hibernate.ddl-auto=update` dans `application.properties` permet à Hibernate de mettre à jour le schéma de la base de données au démarrage.
+## 6. Gestion de la base de données
+
+* Base **SQLite** locale (100 % hors ligne)
+* Fichier généré automatiquement : `senegal_sante.db`
+* Mise à jour automatique du schéma via :
+
+```properties
+spring.jpa.hibernate.ddl-auto=update
+```
+
+---
 
 ## 7. Contribution
 
-Les contributions sont les bienvenues. Veuillez forker le dépôt, créer une branche pour votre fonctionnalité et soumettre une Pull Request.
+Les contributions sont encouragées :
+
+1. Fork du dépôt
+2. Création d’une branche dédiée
+3. Soumission d’une Pull Request
+
+---
 
 ## 8. Licence
 
-Ce projet est sous licence [MIT License](LICENSE). <!-- À ajuster si nécessaire -->
+Ce projet est distribué sous licence **MIT**.
 
 ---
-**Note :** N'oubliez pas de remplacer l'URL du dépôt GitHub par la valeur réelle.
-#   C A R N E T _ S A N T E _ G I T H U B  
- 
+
+> **Note** : pensez à remplacer l’URL du dépôt GitHub par l’adresse réelle.
